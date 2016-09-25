@@ -1,0 +1,11 @@
+This example show how to define behaviors to an actor.
+
+Alarm has two states:
+ 1) enabled
+ 2) disabled
+
+ It accepts three messages: Activity, Enable and Disable
+
+ Enable: will start the alarm
+ Disabled: will deactivate the alarm
+ Activity: will show the state of the alarm
