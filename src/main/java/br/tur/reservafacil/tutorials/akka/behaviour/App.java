@@ -2,6 +2,7 @@ package br.tur.reservafacil.tutorials.akka.behaviour;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
+import com.lightbend.akkasample.StdIn;
 
 /**
  * Created by enrique on 10/2/16.
@@ -21,6 +22,11 @@ public class App {
         alarmActor.tell(new AlarmActor.Disable(password), ActorRef.noSender());
         alarmActor.tell(new AlarmActor.Activity(), ActorRef.noSender());
 
+        System.out.println("ENTER to terminate");
+        StdIn.readLine();
+
+        actorSystem.shutdown();
+        actorSystem.awaitTermination();
     }
 
 }

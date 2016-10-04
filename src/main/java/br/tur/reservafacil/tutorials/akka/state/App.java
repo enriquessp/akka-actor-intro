@@ -29,5 +29,8 @@ public class App {
         System.out.println("ENTER to terminate");
         StdIn.readLine();
 
+        actorSystem.shutdown();
+        actorSystem.awaitTermination();
+
     }
 }
