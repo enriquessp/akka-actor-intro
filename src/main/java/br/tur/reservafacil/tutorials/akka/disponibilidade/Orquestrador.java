@@ -29,13 +29,21 @@ public class Orquestrador extends AbstractLoggingActor {
         }
     }
 
+    public static class FinalizarBusca {}
+
     {
         receive(
                 ReceiveBuilder
                     .match(Buscar.class, this::onBuscar)
                     .match(ContabilizarMeta.class, this::onContabilizaMeta)
+                    .match(FinalizarBusca.class, this::onFinalizarBusca)
                     .build()
         );
+    }
+
+    private void onFinalizarBusca(FinalizarBusca finalizarBusca) {
+        log().info("###### Finalizando orquestrador e seus filhos #######");
+        getContext().stop(self());
     }
 
     private long buscaId;
@@ -56,6 +64,16 @@ public class Orquestrador extends AbstractLoggingActor {
     private void onContabilizaMeta(ContabilizarMeta contabilizarMeta) {
         totalBuscado++;
         log().info("Buscado: "+buscaId+" - "+totalBuscando+" - "+totalBuscado+" - "+ Arrays.toString(contabilizarMeta.responseBusca.getCias()));
+
+        Notificador.Notificar notificar;
+        if (totalBuscado == totalBuscando) {
+            log().info("Ultima busca");
+            notificar = new Notificador.Notificar(true);
+        } else {
+            notificar = new Notificador.Notificar(false);
+        }
+        ActorRef notificador = getContext().actorOf(Notificador.props(), "notificador-" + buscaId + "-" + totalBuscando++);
+        notificador.tell(notificar, self());
     }
 
     public static Props props() {
