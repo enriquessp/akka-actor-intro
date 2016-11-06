@@ -14,7 +14,7 @@ public class App {
     public static void main(String[] args) throws InterruptedException {
         ActorSystem actorSystem = ActorSystem.create("actorSystem");
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 30; i++) {
             final long buscaId = generateCorrelationId();
             new Thread(() -> {
                 ActorRef orquestrador = actorSystem.actorOf(Orquestrador.props(), "orquestrador-"+buscaId);

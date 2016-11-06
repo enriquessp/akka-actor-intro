@@ -36,14 +36,8 @@ public class Orquestrador extends AbstractLoggingActor {
                 ReceiveBuilder
                     .match(Buscar.class, this::onBuscar)
                     .match(ContabilizarMeta.class, this::onContabilizaMeta)
-                    .match(FinalizarBusca.class, this::onFinalizarBusca)
                     .build()
         );
-    }
-
-    private void onFinalizarBusca(FinalizarBusca finalizarBusca) {
-        log().info("###### Finalizando orquestrador e seus filhos #######");
-        getContext().stop(self());
     }
 
     private long buscaId;

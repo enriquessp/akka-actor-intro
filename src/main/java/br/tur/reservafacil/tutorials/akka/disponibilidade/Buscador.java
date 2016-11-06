@@ -1,7 +1,6 @@
 package br.tur.reservafacil.tutorials.akka.disponibilidade;
 
-import akka.actor.AbstractLoggingActor;
-import akka.actor.Props;
+import akka.actor.*;
 import akka.japi.pf.ReceiveBuilder;
 
 /**

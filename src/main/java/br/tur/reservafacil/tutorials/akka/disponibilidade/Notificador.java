@@ -2,6 +2,7 @@ package br.tur.reservafacil.tutorials.akka.disponibilidade;
 
 import akka.actor.AbstractLoggingActor;
 import akka.actor.ActorRef;
+import akka.actor.PoisonPill;
 import akka.actor.Props;
 import akka.japi.pf.ReceiveBuilder;
 
@@ -28,7 +29,7 @@ public class Notificador extends AbstractLoggingActor {
     private void onNotificar(Notificar notificar) {
         log().info("POST:::");
         if (notificar.ultimaBusca) {
-            sender().tell(new Orquestrador.FinalizarBusca(), ActorRef.noSender());
+            sender().tell(PoisonPill.getInstance(), ActorRef.noSender());
         }
     }
 
